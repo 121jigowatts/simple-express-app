@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>async/await</title>
+    <meta content="text/html; charset=utf-8" />
+  </head>
+
+  <body>
+    <h1>async/await</h1>
+    <h2>非同期</h2>
+    <script>
+      const getData = async (id) => {
+        const res = await fetch(`http://localhost:3000/${id}`);
+        const results = await res.json();
+        console.log(results);
+
+        // この中の処理は待ってくれる
+        const resPulus = await fetch(`http://localhost:3000/${id + 10}`);
+        const resultsPulus = await resPulus.json();
+        console.log(resultsPulus);
+      };
+
+      (async () => {
+        const ids = [1, 2, 3];
+        for (let id of ids) {
+          console.log(`start: ${id}`);
+          await getData(id);
+          console.log(`end: ${id}`);
+        }
+        console.log("処理完了");
+      })();
+    </script>
+  </body>
+</html>
